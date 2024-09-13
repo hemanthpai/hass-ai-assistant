@@ -1,0 +1,7 @@
+{
+  "name": "AI Assistant",
+  "filename": "ai_assistant.zip",
+  "hide_default_branch": true,
+  "homeassistant": "2024.4.1",
+  "zip_release": true
+}

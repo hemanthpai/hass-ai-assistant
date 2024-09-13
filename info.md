@@ -1,9 +1,3 @@
-[![GitHub Release](https://img.shields.io/github/release/hemanthpai/hass-ai-assistant.svg?style=flat-square)](https://github.com/hemanthpai/hass-ai-assistant/releases)
-[![Downloads](https://img.shields.io/github/downloads/hemanthpai/hass-ai-assistant/total?style=flat-square)](https://github.com/hemanthpai/hass-ai-assistant/releases)
-[![Build Status](https://img.shields.io/github/actions/workflow/status/hemanthpai/hass-ai-assistant/validate.yml?style=flat-square)](https://github.com/hemanthpai/hass-ai-assistant/actions/workflows/validate.yaml)
-[![License](https://img.shields.io/github/license/hemanthpai/hass-ai-assistant.svg?style=flat-square)](LICENSE)
-[![hacs](https://img.shields.io/badge/HACS-default-orange.svg?style=flat-square)](https://hacs.xyz)
-
 # AI Assistant
 
 The AI Assistant integration adds a conversation agent, powered by a self hosted LLM, in Home Assistant.
@@ -33,25 +27,14 @@ The assistant currently supports the following device types and operations:
 
 This integration is a work in progress and the list of features will continue to grow!
 
-## Installation
+## Options
 
-To install the **AI Assistant** integration to your Home Assistant instance, use this My button:
-
-[![Open your Home Assistant instance and open a repository inside the Home Assistant Community Store.](https://my.home-assistant.io/badges/hacs_repository.svg)](https://my.home-assistant.io/redirect/hacs_repository/?owner=hemanthpai&repository=hass-ai-assistant&category=integration)
-
-#### Manual Insallation
-
-If the above My button doesn’t work, you can also perform the following steps manually:
+Options for AI Assistant can be set via the user interface, by taking the following steps:
 
 - Browse to your Home Assistant instance.
-- Go to HACS > Integrations > Custom Repositories.
-- Add custom repository.
-  - Repository is `hemanthpai/hass-ai-assistant`.
-  - Category is `Integration`.
-- Click **_Explore & Download Repositories_**.
-- From the list, select AI Assistant.
-- In the bottom right corner, click the **_Download_** button.
-- Follow the instructions on screen to complete the installation.
+- Go to Settings > Devices & Services.
+- If multiple instances of AI Conversation are configured, choose the instance you want to configure.
+- Select the integration, then select **_Configure_**.
 
 #### Note:
 
@@ -62,15 +45,6 @@ HACS does not "configure" the integration for you, You must add AI Assistant aft
 - In the bottom right corner, select the **_Add Integration_** button.
 - From the list, select AI Assistant.
 - Follow the instructions on screen to complete the setup.
-
-## Options
-
-Options for AI Assistant can be set via the user interface, by taking the following steps:
-
-- Browse to your Home Assistant instance.
-- Go to Settings > Devices & Services.
-- If multiple instances of AI Conversation are configured, choose the instance you want to configure.
-- Select the integration, then select **_Configure_**.
 
 #### General Settings
 
@@ -100,10 +74,7 @@ The language model and additional parameters to fine tune the responses.
 
 Discussions for this integration over on the [discussions][discussions] page
 
-### Credits
-
-This integration was inspired by the [Ollama Connversation][ollamaconversation] integration. Early iterations of this integration were based on a fork of this repository. As development progressed, through benchmarking, I found that Functionary offered better success rates than Llama 3.1, Groq Llama, and Mistral Nemo. As I result, this integration diverged from Ollama Conversation in its use of vLLM/Open AI compatible APIs v/s using a Ollama server. Despite the divergence, this integration still retains some code and design choices.
-An additional source of inspiration is the [Home LLM][homellm] integration.
+---
 
 [ollamaconversation]: https://github.com/ej52/hass-ollama-conversation
 [discussions]: https://github.com/hemanthpai/hass-ai-assistant/discussions/
