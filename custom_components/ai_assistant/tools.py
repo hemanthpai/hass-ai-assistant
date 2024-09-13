@@ -89,7 +89,9 @@ SUPPORTED_DOMAINS = {
     "hass_get_agenda": ["calendar"],
     "hass_get_calendar_availability": ["calendar"],
     "hass_get_calendar_events": ["calendar"],
-    "hass_light_control": ["light"],
+    "hass_set_color": ["light"],
+    "hass_set_brightness": ["light"],
+    "hass_set_light_temperature": ["light"],
 }
 
 
@@ -588,16 +590,14 @@ async def hass_fan_control(entity_id: str, action: str):
 
     return result
 
+async def hass_set_color(entity_ids: list[str], color: list[int]):
+    """Set the color for the light entities specified in the 'entity_ids' parameter.
 
-async def hass_light_control(entity_ids: list[str], data: dict):
-    """Control the light entities specified in the 'entity_ids' parameter with the data specified in the 'data' parameter.
+    Only supported for light devices.
 
     Args:
         entity_ids: A list of strings containing the entity IDs of the light devices that need to be controlled.
-        data: The data to pass to the service. Data must contain one of the following keys: 'brightness_pct', 'temperature', 'rgb_color'.
-            For 'brightness_pct', the value must be an integer between 0 and 100.
-            For 'temperature', the value must be an integer between 2700 and 6500.
-            For 'rgb_color', the value must be a list of three integers between 0 and 255.
+        color: The color to set. The value must be a list of three integers between 0 and 255.
 
     """
 
@@ -606,29 +606,75 @@ async def hass_light_control(entity_ids: list[str], data: dict):
     if len(entity_ids) < 1:
         raise ValueError("entity_ids must contain at least one entity ID")
 
-    if not isinstance(data, dict):
-        raise TypeError("data must be a dictionary")
+    if not isinstance(color, list) or len(color) != 3 or not all(isinstance(color_value, int) for color_value in color):
+        raise ValueError(
+            "color must be a list of three integers between 0 and 255")
 
-    if "brightness_pct" in data:
-        if not isinstance(data["brightness_pct"], int):
-            raise TypeError("brightness_pct must be an integer")
-        if data["brightness_pct"] < 0 or data["brightness_pct"] > 100:
-            raise ValueError("brightness_pct must be between 0 and 100")
+    LOGGER.debug(f"Setting color of light entities: {', '.join(entity_ids)}")
 
-    if "temperature" in data:
-        if not isinstance(data["temperature"], int):
-            raise TypeError("temperature must be an integer")
-        if data["temperature"] < 2700 or data["temperature"] > 6500:
-            raise ValueError("temperature must be between 2700 and 6500")
+    result = await make_service_call_with_data(entity_ids, "turn_on", {
+        "rgb_color": color
+    }, "hass_set_color")
 
-    if "rgb_color" in data:
-        if not isinstance(data["rgb_color"], list) or len(data["rgb_color"]) != 3 or not all(isinstance(color, int) for color in data["rgb_color"]):
-            raise ValueError(
-                "rgb_color must be a list of three integers between 0 and 255")
+    return result
 
-    LOGGER.debug(f"Controlling light entities: {', '.join(entity_ids)}")
+async def hass_set_brightness(entity_ids: list[str], brightness: int):
+    """Set the brightness for the light entities specified in the 'entity_ids' parameter.
 
-    result = await make_service_call_with_data(entity_ids, "turn_on", data, "hass_light_control")
+    Only supported for light devices.
+
+    Args:
+        entity_ids: A list of strings containing the entity IDs of the light devices that need to be controlled.
+        brightness: The brightness value to set. The value must be an integer between 0 and 100.
+
+    """
+
+    if not isinstance(entity_ids, list) or not all(isinstance(id, str) for id in entity_ids):
+        raise ValueError("entity_ids must be a list of strings")
+    if len(entity_ids) < 1:
+        raise ValueError("entity_ids must contain at least one entity ID")
+
+    if not isinstance(brightness, int):
+        raise TypeError("brightness must be an integer")
+    if brightness < 0 or brightness > 100:
+        raise ValueError("brightness must be between 0 and 100")
+
+    LOGGER.debug(f"Setting brightness of light entities: {', '.join(entity_ids)}")
+
+    result = await make_service_call_with_data(entity_ids, "turn_on", {
+        "brightness_pct": brightness
+    }, "hass_set_brightness")
+
+    return result
+
+async def hass_set_light_temperature(entity_ids: list[str], temperature: int):
+    """Set the color temperature for the light entities specified in the 'entity_ids' parameter.
+
+    Only supported for light devices.
+
+    Args:
+        entity_ids: A list of strings containing the entity IDs of the light devices that need to be controlled.
+        temperature: The color temperature value to set. The value must be an integer between 2700 and 6500.
+
+    """
+
+    if not isinstance(entity_ids, list) or not all(isinstance(id, str) for id in entity_ids):
+        raise ValueError("entity_ids must be a list of strings")
+
+    if len(entity_ids) < 1:
+        raise ValueError("entity_ids must contain at least one entity ID")
+
+    if not isinstance(temperature, int):
+        raise TypeError("temperature must be an integer")
+
+    if temperature < 2700 or temperature > 6500:
+        raise ValueError("temperature must be between 2700 and 6500")
+
+    LOGGER.debug(f"Setting color temperature of light entities: {', '.join(entity_ids)}")
+
+    result = await make_service_call_with_data(entity_ids, "turn_on", {
+        "temperature": temperature
+    }, "hass_set_light_temperature")
 
     return result
 
@@ -907,7 +953,9 @@ tools = [
     get_json_schema(hass_get_agenda),
     get_json_schema(hass_get_availability),
     get_json_schema(hass_create_event),
-    get_json_schema(hass_light_control),
+    get_json_schema(hass_set_brightness),
+    get_json_schema(hass_set_color),
+    get_json_schema(hass_set_light_temperature),
 ]
 
 TOOL_FUNCTIONS = {
@@ -930,5 +978,7 @@ TOOL_FUNCTIONS = {
     "hass_get_agenda": hass_get_agenda,
     "hass_get_availability": hass_get_availability,
     "hass_create_event": hass_create_event,
-    "hass_light_control": hass_light_control,
+    "hass_set_brightness": hass_set_brightness,
+    "hass_set_color": hass_set_color,
+    "hass_set_light_temperature": hass_set_light_temperature,
 }
