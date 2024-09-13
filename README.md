@@ -113,4 +113,4 @@ An additional source of inspiration is the [Home LLM][homellm] integration.
 [functionary]: https://github.com/MeetKai/functionary
 [berkeley]: https://gorilla.cs.berkeley.edu/leaderboard.html
 [homellm]: https://github.com/acon96/home-llm
-[icon]: https://github.com/hemanthpai/hass-ai-assistant/blob/main/icon.png
+[icon]: https://github.com/hemanthpai/hass-ai-assistant/blob/main/images/icon.png
