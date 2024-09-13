@@ -8,6 +8,5 @@
   "integration_type": "service",
   "iot_class": "cloud_polling",
   "issue_tracker": "https://github.com/hemanthpai/hass-ai-assistant/issues",
-  "version": "0.0.0",
-  "icon": "https://github.com/hemanthpai/hass-ai-assistant/blob/main/icon.png"
+  "version": "0.0.0"
 }
