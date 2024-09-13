@@ -5,11 +5,17 @@
 [![hacs](https://img.shields.io/badge/HACS-default-orange.svg?style=flat-square)](https://hacs.xyz)
 
 # AI Assistant
-
-![Icon][icon] The AI Assistant integration adds a conversation agent, powered by a self hosted LLM, in Home Assistant.
-
-This conversation agent can control devices in your home. To be able to do so, you will need to expose the relevant devices and entities in Home Assistant under Settings -> Voice Assistant -> Expose Entities.
-
+<table>
+  <tr border="none">
+    <td border="none" width="150" align="center">
+      <img src="https://github.com/hemanthpai/hass-ai-assistant/blob/main/images/icon.png" alt="Icon" width="100" height="100">
+    </td>
+    <td border="none">
+      The AI Assistant integration adds a conversation agent, powered by a self hosted LLM, in Home Assistant. This conversation agent can control devices in your home. To be able to do so, you will need to expose the relevant devices and entities in Home Assistant under Settings -> Voice Assistant -> Expose Entities.
+    </td>
+  </tr>
+</table>
+    
 ## Requirements
 
 This integration requires setting up [Functionary's][functionary] vLLM based inferencing server. Refer to their Setup section for instructions on how to get the inferencing server up and running. The recommended model to use is **meetkai/functionary-small-v3.2**.
