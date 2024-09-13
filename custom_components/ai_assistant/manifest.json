@@ -1,16 +1,13 @@
 {
   "domain": "ai_assistant",
   "name": "AI Assistant",
-  "codeowners": [
-    "@hemanthpai"
-  ],
+  "codeowners": ["@hemanthpai"],
   "config_flow": true,
-  "dependencies": [
-    "conversation"
-  ],
+  "dependencies": ["conversation"],
   "documentation": "https://github.com/hemanthpai/hass-ai-assistant#options",
   "integration_type": "service",
   "iot_class": "cloud_polling",
   "issue_tracker": "https://github.com/hemanthpai/hass-ai-assistant/issues",
-  "version": "0.0.0"
+  "version": "0.0.0",
+  "icon": "https://github.com/hemanthpai/hass-ai-assistant/blob/main/icon.png"
 }

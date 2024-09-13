@@ -6,7 +6,9 @@
 
 # AI Assistant
 
-The AI Assistant integration adds a conversation agent, powered by a self hosted LLM, in Home Assistant.
+![Icon][icon] The AI Assistant integration adds a conversation agent, powered by a self hosted LLM, in Home Assistant.
+
+This conversation agent can control devices in your home. To be able to do so, you will need to expose the relevant devices and entities in Home Assistant under Settings -> Voice Assistant -> Expose Entities.
 
 ## Requirements
 
@@ -30,6 +32,7 @@ The assistant currently supports the following device types and operations:
 - Script: run an existing script
 - Vacuum: start, stop, pause, send back to docking station
 - Calendar: get agenda for the specified time frame (ex: today, tomorrow, this week, next week etc.), create events, find open time slots on the calendar
+- Generic Chat Bot
 
 This integration is a work in progress and the list of features will continue to grow!
 
@@ -110,3 +113,4 @@ An additional source of inspiration is the [Home LLM][homellm] integration.
 [functionary]: https://github.com/MeetKai/functionary
 [berkeley]: https://gorilla.cs.berkeley.edu/leaderboard.html
 [homellm]: https://github.com/acon96/home-llm
+[icon]: https://github.com/hemanthpai/hass-ai-assistant/blob/main/icon.png
