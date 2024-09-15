@@ -5,16 +5,12 @@
 [![hacs](https://img.shields.io/badge/HACS-default-orange.svg?style=flat-square)](https://hacs.xyz)
 
 # AI Assistant
-<table>
-  <tr border="none">
-    <td border="none" width="150" align="center">
-      <img src="https://github.com/hemanthpai/hass-ai-assistant/blob/main/images/icon.png" alt="Icon" width="100" height="100">
-    </td>
-    <td border="none">
-      The AI Assistant integration adds a conversation agent, powered by a self hosted LLM, in Home Assistant. This conversation agent can control devices in your home. To be able to do so, you will need to expose the relevant devices and entities in Home Assistant under Settings -> Voice Assistant -> Expose Entities.
-    </td>
-  </tr>
-</table>
+<div align="center">
+  <img src="https://github.com/hemanthpai/hass-ai-assistant/blob/main/images/icon.png" alt="Icon" width="300" height="300">
+</div>
+<p>
+  The AI Assistant integration adds a conversation agent, powered by a self hosted LLM, in Home Assistant. This conversation agent can control devices in your home. To be able to do so, you will need to expose the relevant devices and entities in Home Assistant under Settings -> Voice Assistant -> Expose Entities.
+</p>
     
 ## Requirements
 
