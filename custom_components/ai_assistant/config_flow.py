@@ -23,7 +23,7 @@ from .api import VllmApiClient
 from .response import VllmModelsApiResponse
 
 from .const import (
-    DOMAIN, LOGGER,
+    DEFAULT_TOOL, DOMAIN, LOGGER,
     MENU_OPTIONS,
 
     CONF_BASE_URL,
@@ -34,6 +34,7 @@ from .const import (
     CONF_TEMPERATURE,
     CONF_TOP_P,
     CONF_PROMPT_SYSTEM,
+    CONF_TOOL,
 
     DEFAULT_BASE_URL,
     DEFAULT_TIMEOUT,
@@ -42,7 +43,7 @@ from .const import (
     DEFAULT_MAX_TOKENS,
     DEFAULT_TEMPERATURE,
     DEFAULT_TOP_P,
-    DEFAULT_PROMPT_SYSTEM
+    DEFAULT_PROMPT_SYSTEM, TOOL_OPTIONS,
 )
 from .exceptions import (
     ApiClientError,
@@ -55,6 +56,17 @@ STEP_USER_DATA_SCHEMA = vol.Schema(
     {
         vol.Required(CONF_BASE_URL, default=DEFAULT_BASE_URL): str,
         vol.Required(CONF_TIMEOUT, default=DEFAULT_TIMEOUT): int,
+        vol.Required(
+            CONF_TOOL,
+            default=DEFAULT_TOOL
+        ): SelectSelector(SelectSelectorConfig(
+            options=TOOL_OPTIONS,
+            mode=SelectSelectorMode.DROPDOWN,
+            custom_value=True,
+            translation_key=CONF_TOOL,
+            sort=True
+        ))
+
     }
 )
 
@@ -86,9 +98,9 @@ class AIAssistantConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
                 step_id="user", data_schema=STEP_USER_DATA_SCHEMA
             )
 
-        # Search for duplicates with the same CONF_BASE_URL value.
+        # Search for duplicates with the same CONF_BASE_URL and CONF_TOOL value.
         for existing_entry in self._async_current_entries(include_ignore=False):
-            if existing_entry.data.get(CONF_BASE_URL) == user_input[CONF_BASE_URL]:
+            if existing_entry.data.get(CONF_BASE_URL) == user_input[CONF_BASE_URL] and existing_entry.data.get(CONF_TOOL) == user_input[CONF_TOOL]:
                 return self.async_abort(reason="already_configured")
 
         errors = {}
@@ -111,7 +123,7 @@ class AIAssistantConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
             LOGGER.exception("Unexpected exception: %s", exception)
             errors["base"] = "unknown"
         else:
-            return self.async_create_entry(title=f"AI Assistant - {user_input[CONF_BASE_URL]}", data={
+            return self.async_create_entry(title=f"AI Assistant - {user_input[CONF_TOOL]} - {user_input[CONF_BASE_URL]}", data={
                 CONF_BASE_URL: user_input[CONF_BASE_URL]
             }, options={
                 CONF_TIMEOUT: user_input[CONF_TIMEOUT]
@@ -195,7 +207,7 @@ class AIAssistantOptionsFlow(config_entries.OptionsFlow):
             LOGGER.exception("Unexpected exception: %s", exception)
             response = VllmModelsApiResponse([])
         schema = ai_assistant_schema_model_config(self.config_entry.options, [
-                                            model.model_id for model in response.models])
+            model.model_id for model in response.models])
         return self.async_show_form(
             step_id="model_config",
             data_schema=vol.Schema(schema)
