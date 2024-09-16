@@ -4,9 +4,11 @@ on:
   push:
     branches:
       - "main"
+      - "instructor"
   pull_request:
     branches:
       - "main"
+      - "instructor"
 
 jobs:
   ruff:
