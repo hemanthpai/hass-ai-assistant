@@ -19,7 +19,7 @@ from .api import VllmApiClient
 from .const import (
     CONF_TOOL, DEFAULT_TOOL, DOMAIN, CONF_BASE_URL,
     CONF_TIMEOUT,
-    DEFAULT_TIMEOUT, REGULAR_TOOL
+    DEFAULT_TIMEOUT, LOGGER, REGULAR_TOOL
 )
 from .coordinator import AIConversationDataUpdateCoordinator
 from .exceptions import (
@@ -60,6 +60,8 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     entry.async_on_unload(entry.add_update_listener(async_reload_entry))
 
     tool_set = entry.options.get(CONF_TOOL, DEFAULT_TOOL)
+
+    LOGGER.debug("Setting up AI Assistant with tool set: %s", tool_set)
 
     if tool_set == REGULAR_TOOL:
         conversation.async_set_agent(

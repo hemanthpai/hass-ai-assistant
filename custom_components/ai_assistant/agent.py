@@ -192,6 +192,9 @@ class AIConversationAgent(conversation.AbstractConversationAgent):
             intent.IntentResponseErrorCode.UNKNOWN,
             "I had a problem with my system prompt, please check the logs for more information.",
         )
+        intent_response.async_set_speech(
+            "I had a problem with my system prompt, please check the logs for more information."
+        )
         return conversation.ConversationResult(
             response=intent_response, conversation_id=conversation_id
         )
@@ -199,14 +202,7 @@ class AIConversationAgent(conversation.AbstractConversationAgent):
     def _handle_api_error(self, err: Exception, language: str, conversation_id: str) -> conversation.ConversationResult:
         """Handle API errors."""
         LOGGER.error("API error: %s", err)
-        intent_response = intent.IntentResponse(language=language)
-        intent_response.async_set_error(
-            intent.IntentResponseErrorCode.UNKNOWN,
-            "There was an error communicating with the API.",
-        )
-        return conversation.ConversationResult(
-            response=intent_response, conversation_id=conversation_id
-        )
+        return "There was an error communicating with the AI API. Please check the logs for more information."
 
     def _handle_homeassistant_error(self, err: Exception, language: str, conversation_id: str) -> conversation.ConversationResult:
         """Handle Home Assistant errors."""
@@ -215,6 +211,9 @@ class AIConversationAgent(conversation.AbstractConversationAgent):
         intent_response.async_set_error(
             intent.IntentResponseErrorCode.UNKNOWN,
             "There was an error communicating with Home Assistant.",
+        )
+        intent_response.async_set_speech(
+            "There was an error communicating with Home Assistant. Please check the logs for more information."
         )
         return conversation.ConversationResult(
             response=intent_response, conversation_id=conversation_id

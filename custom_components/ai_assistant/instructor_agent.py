@@ -4,7 +4,7 @@ For more details about this integration, please refer to
 https://github.com/hemanthpai/hass-ai-assistant
 """
 from __future__ import annotations
-from typing import Literal
+from typing import Iterable, Literal
 
 import instructor.exceptions
 from openai import OpenAI
@@ -23,6 +23,8 @@ from homeassistant.util import ulid
 import instructor
 
 from .hass import HomeAssistantServiceResult
+
+from .instructor_tools import Light, Switch, Fan, Climate, Cover, CreateCalendarEvent, GetCalendarEvents, Automation, Scene, Script, Media, Lock, Vacuum
 
 from .const import (
     CONF_CTX_SIZE, CONF_MAX_TOKENS, CONF_MODEL, CONF_PROMPT_SYSTEM, CONF_TEMPERATURE, CONF_TOP_P, DEFAULT_INSTRUCTOR_PROMPT_SYSTEM, LOGGER
@@ -125,6 +127,9 @@ class AIConversationInstructionAgent(conversation.AbstractConversationAgent):
             intent.IntentResponseErrorCode.UNKNOWN,
             "I had a problem with my system prompt, please check the logs for more information.",
         )
+        intent_response.async_set_speech(
+            "I'm sorry, I had a problem with my system prompt. Please check the logs for more information."
+        )
         return conversation.ConversationResult(
             response=intent_response, conversation_id=conversation_id
         )
@@ -138,6 +143,8 @@ class AIConversationInstructionAgent(conversation.AbstractConversationAgent):
                 temperature=self.entry.options.get(CONF_TEMPERATURE),
                 top_p=self.entry.options.get(CONF_TOP_P),
                 max_retries=2,
+                response_model=Iterable[Light | Switch | Fan | Climate | Cover | CreateCalendarEvent |
+                                        GetCalendarEvents | Automation | Scene | Script | Media | Lock | Vacuum]
             )
             return response
         except Exception as err:
@@ -168,6 +175,9 @@ class AIConversationInstructionAgent(conversation.AbstractConversationAgent):
         intent_response.async_set_error(
             intent.IntentResponseErrorCode.UNKNOWN,
             "There was an error communicating with the API.",
+        )
+        intent_response.async_set_speech(
+            "I'm sorry, I couldn't process that request. There was an error communicating with the API."
         )
         return conversation.ConversationResult(
             response=intent_response, conversation_id=conversation_id
@@ -201,5 +211,7 @@ class AIConversationInstructionAgent(conversation.AbstractConversationAgent):
                 f"I'm sorry, I couldn't process that request. There was an error with the following entities: {
                     error_message}",
             )
+            intent_response.async_set_speech(
+                f"I'm sorry, I couldn't process that request. There was an error with the following entities: {error_message}")
 
         return intent_response

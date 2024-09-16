@@ -126,7 +126,8 @@ class AIAssistantConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
             return self.async_create_entry(title=f"AI Assistant - {user_input[CONF_TOOL]} - {user_input[CONF_BASE_URL]}", data={
                 CONF_BASE_URL: user_input[CONF_BASE_URL]
             }, options={
-                CONF_TIMEOUT: user_input[CONF_TIMEOUT]
+                CONF_TIMEOUT: user_input[CONF_TIMEOUT],
+                CONF_TOOL: user_input[CONF_TOOL]
             })
 
         return self.async_show_form(
