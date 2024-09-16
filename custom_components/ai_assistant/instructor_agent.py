@@ -4,7 +4,8 @@ For more details about this integration, please refer to
 https://github.com/hemanthpai/hass-ai-assistant
 """
 from __future__ import annotations
-from typing import Iterable, Literal
+from typing import Literal
+from collections.abc import Iterable
 
 import instructor.exceptions
 from openai import OpenAI
