@@ -156,7 +156,7 @@ class AIConversationInstructionAgent(conversation.AbstractConversationAgent):
     async def _query(self, messages: list[dict]) -> list[dict]:
         """Query the API."""
         try:
-            response = self.client.chat.completions.create(
+            response = await self.client.chat.completions.create(
                 model=self.entry.options.get(CONF_MODEL),
                 messages=messages,
                 ctx_size=self.entry.options.get(CONF_CTX_SIZE),
