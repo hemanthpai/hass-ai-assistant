@@ -5,3 +5,26 @@ set -e
 cd "$(dirname "$0")/.."
 
 python3 -m pip install --requirement requirements.txt
+
+# Required by the virtual component integration
+python3 -m pip install aiofiles
+
+cd "$(dirname "$0")/.."
+
+# Install hass-virtual
+mkdir -p custom_components
+cd custom_components
+
+# Clone the repo
+git clone https://github.com/twrecked/hass-virtual.git hass-virtual-repo
+
+# Remove the virtual component if it exists, so we can copy the latest version
+if [[ -d "virtual" ]]; then
+    rm -rf virtual
+fi
+
+# Copy the virtual component
+cp -r hass-virtual-repo/custom_components/virtual virtual
+
+# Remove the repo
+rm -rf hass-virtual-repo

@@ -67,8 +67,8 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
         conversation.async_set_agent(
             hass, entry, AIConversationAgent(hass, entry, client))
     else:
-        openai_client = openai.OpenAI(
-            base_url=entry.data[CONF_BASE_URL],
+        openai_client = openai.AsyncOpenAI(
+            base_url=entry.data[CONF_BASE_URL] + "/v1",
             timeout=entry.options.get(CONF_TIMEOUT, DEFAULT_TIMEOUT),
             api_key="ollama"
         )

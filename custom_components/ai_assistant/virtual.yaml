@@ -1,0 +1,137 @@
+devices:
+  Coffee Grinder Switch:
+  - platform: switch
+    name: Coffee Grinder Switch
+    initial_value: 'off'
+
+  Coffee Maker Switch:
+  - platform: switch
+    name: Coffee Maker Switch
+    initial_value: 'off'
+
+  Living Room Light:
+  - platform: light
+    name: Living Room Light
+    initial_value: 'off'
+    support_brightness: true
+    initial_brightness: 100
+    support_color: true
+    initial_color: [0, 0, 255]
+    support_color_temp: true
+    initial_color_temp: 153
+
+  Dining Room Light:
+  - platform: light
+    name: Dining Room Light
+    initial_value: 'off'
+    support_brightness: true
+    initial_brightness: 100
+    support_color: true
+    initial_color: [0, 0, 255]
+    support_color_temp: true
+    initial_color_temp: 153
+
+  Bedroom Light:
+  - platform: light
+    name: Bedroom Light
+    initial_value: 'off'
+    support_brightness: true
+    initial_brightness: 100
+    support_color: false
+    support_color_temp: true
+    initial_color_temp: 153
+
+  Kitchen Light:
+  - platform: light
+    name: Kitchen Light
+    initial_value: 'off'
+    support_brightness: true
+    initial_brightness: 100
+    support_color: true
+    initial_color: [0, 0, 255]
+    support_color_temp: true
+    initial_color_temp: 153
+
+  Garage Door:
+  - platform: cover
+    name: Garage Door
+    initial_value: 'closed'
+
+  Window Blinds:
+  - platform: cover
+    name: Window Blinds
+    initial_value: 'closed'
+
+  Front Door Lock:
+  - platform: lock
+    name: Front Door Lock
+    initial_value: 'locked'
+
+  Back Door Lock:
+  - platform: lock
+    name: Back Door Lock
+    initial_value: 'locked'
+
+  Front Sprinkler:
+  - platform: valve
+    name: Front Sprinkler
+    initial_value: 'closed'
+
+  Living Room Motion:
+  - platform: binary_sensor
+    name: Living Room Motion
+    initial_value: 'off'
+    class: motion
+
+  Front Door Sensor:
+  - platform: binary_sensor
+    name: Front Door Sensor
+    initial_value: 'off'
+    class: door
+
+  Back Door Sensor:
+  - platform: binary_sensor
+    name: Back Door Sensor
+    initial_value: 'off'
+    class: door
+
+  Office Occupancy:
+  - platform: binary_sensor
+    name: Office Occupancy
+    initial_value: 'off'
+    class: occupancy
+
+  Bedroom Occupancy:
+  - platform: binary_sensor
+    name: Bedroom Occupancy
+    initial_value: 'off'
+    class: occupancy
+
+  Living Room Smoke:
+  - platform: binary_sensor
+    name: Living Room Smoke
+    initial_value: 'off'
+    class: smoke
+
+  Living Room Carbon Monoxide:
+  - platform: binary_sensor
+    name: Living Room Carbon Monoxide
+    initial_value: 'off'
+    class: carbon_monoxide
+
+  Bedroom Temperature:
+  - platform: sensor
+    name: Bedroom Temperature
+    initial_value: 72
+    unit_of_measurement: '°F'
+
+  Living Room Temperature:
+  - platform: sensor
+    name: Living Room Temperature
+    initial_value: 72
+    unit_of_measurement: '°F'
+
+  Bedroom Fan:
+  - platform: fan
+    name: Bedroom Fan
+    speed: true

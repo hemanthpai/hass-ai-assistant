@@ -7,7 +7,7 @@ import asyncio
 import json
 from typing import Literal
 
-from .tools import TOOL_FUNCTIONS, tools, suggest_tool_call
+from .func_tools import TOOL_FUNCTIONS, tools, suggest_tool_call
 from homeassistant.components import conversation
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.const import MATCH_ALL

@@ -10,6 +10,13 @@ if [[ ! -d "${PWD}/config" ]]; then
     hass --config "${PWD}/config" --script ensure_config
 fi
 
+# Copy virtual.yaml
+if [[ -f "${PWD}/config/virtual.yaml" ]]; then
+    rm "${PWD}/config/virtual.yaml"
+fi
+
+cp "${PWD}/custom_components/ai_assistant/virtual.yaml" "${PWD}/config/"
+
 # Set the path to custom_components
 ## This let's us have the structure we want <root>/custom_components/ai_assistant
 ## while at the same time have Home Assistant configuration inside <root>/config

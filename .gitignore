@@ -16,3 +16,6 @@ coverage.xml
 # Home Assistant configuration
 config/*
 !config/configuration.yaml
+
+# leave out the virtual component
+custom_components/virtual/*

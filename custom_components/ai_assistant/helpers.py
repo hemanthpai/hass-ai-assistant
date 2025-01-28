@@ -6,6 +6,8 @@ from homeassistant.components.homeassistant.exposed_entities import async_should
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers import entity_registry, area_registry
 
+from custom_components.ai_assistant.entity_cache import EntityCache
+
 from .const import ASSISTANT_ROLE, NAME_KEY, ROLE_KEY, SYSTEM_ROLE, CONTENT_KEY, TOOL_CALL_ID_KEY, TOOL_CALLS_KEY, TOOL_ROLE, USER_ROLE
 
 
@@ -13,10 +15,20 @@ def get_exposed_entities(hass: HomeAssistant) -> list[dict]:
     """Return exposed entities grouped by area."""
     hass_entity = entity_registry.async_get(hass)
     hass_area = area_registry.async_get(hass)
-    exposed_entities: dict = {"scenes": [], "scripts": [], "automations": [], }
+    exposed_entities: dict = {"scenes": [], "scripts": [
+    ], "automations": [], }
+    entities_to_cache: dict = {"group_by_domain": {}}
 
     for state in hass.states.async_all():
         if async_should_expose(hass, CONVERSATION_DOMAIN, state.entity_id):
+
+            domain = state.domain
+            if domain not in entities_to_cache["group_by_domain"]:
+                entities_to_cache["group_by_domain"][domain] = []
+
+            entities_to_cache["group_by_domain"][domain].append({
+                "entity_id": state.entity_id,
+            })
 
             if state.domain == "scene":
                 exposed_entities["scenes"].append({
@@ -36,6 +48,7 @@ def get_exposed_entities(hass: HomeAssistant) -> list[dict]:
                 })
             else:
                 entity = hass_entity.async_get(state.entity_id)
+
                 area = hass_area.async_get_area(
                     entity.area_id) if entity and entity.area_id else None
                 area_name = area.name if area else "No Area"
@@ -50,6 +63,9 @@ def get_exposed_entities(hass: HomeAssistant) -> list[dict]:
                     "attributes": state.attributes,
                     "aliases": entity.aliases if entity else [],
                 })
+
+    # Initialize the EntityCache with the exposed entities
+    EntityCache.create_instance(entities_to_cache)
 
     return exposed_entities
 
